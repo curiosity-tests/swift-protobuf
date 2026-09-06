@@ -28,7 +28,7 @@ on:
 env:
   # The one variable that separates the arms: on baseline, action-checkout
   # skips its Set up Chalk step entirely.
-  CHALK_ON: ${{ github.event_name == 'workflow_dispatch' && inputs.leg != 'baseline' }}
+  CHALK_ON: ${{ inputs.leg == 'instrumented' }}
 
 run-name: "Build and Test ${{ inputs.leg || 'push' }} ${{ inputs.racecar_run }}"
 
@@ -191,7 +191,7 @@ jobs:
   api-breakage:
     name: Api Breakage Compared to main branch
     # Only on pull requests
-    if: github.event_name == 'pull_request'
+    if: ${{ 'push' == 'pull_request' }}
     runs-on: ubuntu-latest
     container:
       # Test on the latest Swift release. This could run on all the support
@@ -234,7 +234,7 @@ jobs:
   format-check:
     name: swift-format Check
     # Only on pull requests
-    if: github.event_name == 'pull_request'
+    if: ${{ 'push' == 'pull_request' }}
     runs-on: ubuntu-latest
     container:
       # Use use the latest Swift release and that's the version of swift-format
