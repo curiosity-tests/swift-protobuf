@@ -5,9 +5,6 @@ permissions:
   pull-requests: write
 
 on:
-  schedule:
-    # Every night at 2am UTC
-    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:
